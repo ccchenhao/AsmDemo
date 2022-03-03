@@ -1,0 +1,57 @@
+buildscript {
+    ext.kotlin_version = '1.3.72'
+    repositories {
+        maven{
+            //这个gradle在根目录下，所以要定位到customplugin
+            //完整是./customplugin，然后省略了./
+            url uri('customplugin')
+        }
+        maven {
+            url uri('./repo')
+        }
+        google()
+        jcenter()
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.3'
+//        classpath 'com.meituan.robust:gradle-plugin:0.4.99'
+//        classpath 'com.example.buildsrc:gradleplugin:1.0.0'
+        classpath "com.example:customplugin:1.0.0"
+//        classpath "com.asm.plugin:asmplugin:1.0.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        maven {
+            url uri('./repo')
+        }
+        google()
+        jcenter()
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+println("in build.gradle")
+println("In android_sample,gradle id is"+gradle.hashCode())
+println("Home Dir:"+gradle.gradleHomeDir)
+println "User Home Dir:" + gradle.gradleUserHomeDir
+println "Parent: " + gradle.parent
+
+task log{
+    println("in task log")
+    doLast {
+        println("doLast")
+    }
+    doFirst {
+        println("doBefore")
+    }
+}
+
+

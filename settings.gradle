@@ -1,0 +1,4 @@
+rootProject.name = "MyHotfix"
+include ':app'
+include ':baselib'
+include ':customplugin'
