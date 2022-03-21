@@ -4,6 +4,10 @@
     package="com.example.testgradle">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -15,25 +19,25 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
-            <tools:validation testUrl="http://www.nicomama.com" />
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="http"
-                    android:host="www.nicomama.com" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".TestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+<!--            <tools:validation testUrl="http://www.nicomama.com" />-->
+<!--            <intent-filter android:autoVerify="true">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data-->
+<!--                    android:scheme="http"-->
+<!--                    android:host="www.nicomama.com" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".TestActivity">
+
         </activity>
     </application>
 

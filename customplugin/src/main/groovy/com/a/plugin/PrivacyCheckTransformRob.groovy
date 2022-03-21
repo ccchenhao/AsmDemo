@@ -1,6 +1,5 @@
 package com.a.plugin
 
-
 import com.a.plugin.privacycheck.PrivacyCheckRob
 import com.android.build.api.transform.Format
 import com.android.build.api.transform.QualifiedContent
@@ -42,25 +41,17 @@ class PrivacyCheckTransformRob extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws Exception {
         super.transform(transformInvocation)
-
-        println "----------Privacy check transform start buildsrc----------"
-
+        println "----------Privacy check transform start buildSrc----------"
         project.android.bootClasspath.each {
             classPool.appendClassPath(it.absolutePath)
         }
-
         //所有的class经过修改后汇集到这个jar文件中
         File jarFile = generateAllClassOutJarFile(transformInvocation)
-
         //汇集所有class，包括我们编写的java代码和第三方jar中的class
         def ctClasses = ConvertUtils.toCtClasses(transformInvocation.inputs, classPool)
-
         //修改并打包进jarFile
         PrivacyCheckRob.insertCode(ctClasses, jarFile)
-
         println "----------Privacy check transform end buildSrc----------"
-
-//        throw new NullPointerException(("hahahahahahaha"))
     }
 
     private File generateAllClassOutJarFile(TransformInvocation transformInvocation) {

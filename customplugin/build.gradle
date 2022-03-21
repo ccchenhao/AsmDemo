@@ -23,20 +23,12 @@ repositories {
 //Gradle 配置的方式注册插件
 gradlePlugin {
     plugins {
-//        greeting {
-//            // 插件id
-//            id = 'AsmPlugin'
-//            // 插件实现类
-//            implementationClass = 'com.a.plugin.asmplugin.AsmPlugin'
-//        }
         //只能写一个
         greeting {
             // 插件
-            // id PrivacyCheckPlugin
-            id = 'AsmPlugin'
+             id='PrivacyCheckPlugin'
             // 插件实现类
-            implementationClass = 'com.a.plugin.asmplugin.AsmPlugin'
-//            implementationClass = 'com.a.plugin.test.PrivacyCheckPlugin'
+            implementationClass = 'com.a.plugin.test.PrivacyCheckPlugin'
         }
     }
 }

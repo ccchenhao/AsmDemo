@@ -75,48 +75,5 @@ class ConvertUtils {
         return allClass;
     }
 
-    //ge
-    static List<CtClass> getAllClassFiles(Collection<TransformInput> inputs, ClassPool classPool) {
-        List<File> classFiles = new ArrayList<>()
-        def startTime = System.currentTimeMillis()
-        inputs.each {
-            it.directoryInputs.each {
-                println("directory input:"+it.file.absolutePath)
-                def dirPath = it.file.absolutePath
-                org.apache.commons.io.FileUtils.listFiles(it.file, null, true).each {
-                    if (it.absolutePath.endsWith(SdkConstants.DOT_CLASS)) {
-                        def className = it.absolutePath.substring(dirPath.length() + 1, it.absolutePath.length() - SdkConstants.DOT_CLASS.length()).replaceAll(Matcher.quoteReplacement(File.separator), '.')
-                        if (!"META-INF.versions.9.module-info".equals(className)) {
-                            if (classFiles.contains(className)) {
-                                throw new RuntimeException("You have duplicate classes with the same name : " + className + " please remove duplicate classes ")
-                            }
-                            classNames.add(className)
-                        }
-                    }
-                }
-            }
 
-            it.jarInputs.each {
-                println("jar input:"+it.file.absolutePath)
-                def jarFile = new JarFile(it.file)
-                Enumeration<JarEntry> classes = jarFile.entries();
-                while (classes.hasMoreElements()) {
-                    JarEntry libClass = classes.nextElement();
-                    String className = libClass.getName();
-                    if (className.endsWith(SdkConstants.DOT_CLASS)) {
-                        className = className.substring(0, className.length() - SdkConstants.DOT_CLASS.length()).replaceAll('/', '.')
-                        if (!"META-INF.versions.9.module-info".equals(className)) {
-                            if (classNames.contains(className)) {
-                                throw new RuntimeException("You have duplicate classes with the same name : " + className + " please remove duplicate classes ")
-                            }
-                            classNames.add(className)
-                        }
-                    }
-                }
-            }
-        }
-        def cost = (System.currentTimeMillis() - startTime) / 1000
-        println "read all class file cost $cost second"
-        return classFiles
-    }
 }

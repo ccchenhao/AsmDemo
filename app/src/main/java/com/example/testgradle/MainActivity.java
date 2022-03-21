@@ -2,70 +2,47 @@ package com.example.testgradle;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.Button;
-
-import com.example.testgradle.utils.ScreenUtilsKt;
-import com.example.testgradle.view.CircleView;
-
-import java.lang.reflect.TypeVariable;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static boolean aa = false;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i("chlog", "-------> onCreate : " + getClass().getSimpleName());
-//        String[] dexFileNames = {"classes1.dex"};
-//        Student c = new Student();
-//        Log.d("chlog", c.toString());
-//        for (String dexFileName : dexFileNames) {
-//            DexInstaller.installDexFromAssets(BaseApplication.context, dexFileName);
+        TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        Log.d("chlog", "androidID=" + Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            Log.d("chlog", "serial=" + Build.getSerial());
 //        }
-
-        final CircleView circleView = findViewById(R.id.circle_view);
-//        circleView.postInvalidate();
-        ObjectAnimator.ofFloat(circleView, "radius", ScreenUtilsKt.toPx1(150f)).start();
-        final Button showBtn = findViewById(R.id.origin_btn);
-        Log.d("chlog", "showBtn=" + showBtn.getClass().getSimpleName());
-        showBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("chlog", "circleView invalidate");
-                        circleView.invalidate();
-                    }
-                }).start();
-//                TelephonyManager tm = (TelephonyManager) BaseApplication.context
-//                        .getSystemService(Context.TELEPHONY_SERVICE);
-//                tm.getSubscriberId();
-//                TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//                String id = tm.getDeviceId();
-            }
-        });
-        float dp200 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics());
-//        Log.d("chlog", "tm=" + tm);
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = getIntent();
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
+//        Log.d("chlog", "subscriberId=" + tManager.getSubscriberId());
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            Log.d("chlog", "deviceId=" + tManager.getDeviceId(0));
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            Log.d("chlog", "imei=" + tManager.getImei());
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            Log.d("chlog", "imei=" + tManager.getNai());
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            Log.d("chlog", "meid=" + tManager.getMeid());
+//        }
+//        Log.d("chlog", "serialNumber=" + tManager.getSimSerialNumber());
     }
+
+    //就比如这个方法，之前做法为了参数a的值，直接调用一个另一个方法，
+    //参数是object数组，然后直接放进去了，但是int是有问题的，Integer就没问题
+    public static String test() {
+        return "eee";
+    }
+
 }

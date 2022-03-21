@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'PrivacyCheckPlugin'
-apply plugin: 'AsmPlugin'
+apply plugin: 'PrivacyCheckPlugin'
 
 android {
     compileSdkVersion 30

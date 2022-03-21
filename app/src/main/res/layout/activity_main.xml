@@ -7,49 +7,11 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.example.testgradle.view.MyRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.example.testgradle.view.CircleView
-            android:id="@+id/circle_view"
-            android:layout_width="300dp"
-            android:layout_height="300dp" />
-
-        <Button
-            android:id="@+id/origin_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="显示" />
-    </com.example.testgradle.view.MyRelativeLayout>
-
-    <Button
-        android:id="@+id/hotfix_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="替换dex" />
-
-    <Button
-        android:id="@+id/hotfix_btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="网上的热修复" />
-
     <TextView
         android:id="@+id/spantv"
         android:textSize="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="23232323"/>
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"/>
-    <View
-        android:id="@+id/testview"
-        android:layout_width="100dp"
-        android:clickable="true"
-        android:layout_height="30dp"
-        android:background="#D50D0D"/>
+
 </LinearLayout>

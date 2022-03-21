@@ -29,7 +29,7 @@ public class PrivacyCheckRob {
                         public void edit(MethodCall m) throws CannotCompileException {
                             String mLongName = m.getClassName() + "." + m.getMethodName();
 
-                            if (PrivacyConfig.methodHookValueSet.contains(mLongName) && !skipPackage(ctMethod)) {
+                            if (PrivacyConfig.methodHookValueSet.contains(mLongName) && !skipPackage(ctMethod.getLongName())) {
                                 systemOutPrintln(mLongName, m.getLineNumber(), ctMethod);
 //                                InjectAddLog.execute(m);
                                 InjectHookReturnValue.execute(m);
@@ -44,15 +44,6 @@ public class PrivacyCheckRob {
                                 systemOutPrintln(mLongName, fieldAccess.getLineNumber(), ctMethod);
                                 InjectHookReturnValue.execute(fieldAccess);
                             }
-                        }
-
-                        private boolean skipPackage(CtMethod ctMethod) {
-                            String ctMethodLongName = ctMethod.getLongName();
-                            return ctMethodLongName.startsWith("androidx")
-                                    || ctMethodLongName.startsWith("io.flutter")
-                                    || ctMethodLongName.startsWith("com.ta.a.d.e")
-                                    || ctMethodLongName.startsWith("com.ta.utdid2.device.c")
-                                    || ctMethodLongName.startsWith("com.idlefish");
                         }
 
                         private void systemOutPrintln(String mLongName, int lineNumber, CtMethod ctMethod) {
@@ -72,6 +63,14 @@ public class PrivacyCheckRob {
         float cost = (System.currentTimeMillis() - startTime) / 1000.0f;
         System.out.println("insertCode cost " + cost + " second");
 
+    }
+
+    public static boolean skipPackage(String ctMethodLongName) {
+        return ctMethodLongName.startsWith("androidx")
+                || ctMethodLongName.startsWith("io.flutter")
+                || ctMethodLongName.startsWith("com.ta.a.d.e")
+                || ctMethodLongName.startsWith("com.ta.utdid2.device.c")
+                || ctMethodLongName.startsWith("com.idlefish");
     }
 
     public static void zipFile(byte[] classBytesArray, ZipOutputStream zos, String entryName) {

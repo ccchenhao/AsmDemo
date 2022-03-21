@@ -6,21 +6,27 @@ import android.util.Log;
 import com.example.testgradle.BuildConfig;
 
 public class PrivacyProxy {
-//    private static boolean allowVisit = false;
-//
-//    public static boolean isAllowVisit() {
-//        return allowVisit;
-//    }
-//
-//    public static void setAllowVisit(boolean allow) {
-//        allowVisit = allow;
-//    }
 
-    //    private static boolean invoke = true;
     private static boolean isLog = BuildConfig.DEBUG;
 
+//    public static Object[] privacyMethodParams0(){
+//        return new Object[]{};
+//    }
+//    public static Object[] privacyMethodParams1(Object object1){
+//        return new Object[]{object1};
+//    }
+//    public static Object[] privacyMethodParams2(Object object1,Object object2){
+//        return new Object[]{object1,object2};
+//    }
+//    public static Object[] privacyMethodParams3(Object object1,Object object2,Object object3){
+//        return new Object[]{object1,object2,object3};
+//    }
+//    public static Object[] privacyMethodParams4(Object object1,Object object2,Object object3,Object object4){
+//        return new Object[]{object1,object2,object3,object4};
+//    }
+
     public static Object privacyRejectMethod(String clzName, String methodName, Object obj, Class[] paramsClasses, Object[] paramsValues) {
-        Log.d("chlog","2222");
+        Log.d("chlog", "改写" + methodName);
         if (isLog) {
             Log.d("alvin", "-----------------------------------------");
         }
@@ -39,7 +45,7 @@ public class PrivacyProxy {
                 result = "invalid_SubscriberId";
             } else if (mLongName.equals(PrivacyConfigInApp.getDeviceId)) {
                 result = "invalid_deviceId";
-                Log.d("chlog","3333");
+                Log.d("chlog", "3333");
             } else if (mLongName.equals(PrivacyConfigInApp.getImei)) {
                 result = "invalid_imei";
             } else if (mLongName.equals(PrivacyConfigInApp.getNai)) {
@@ -64,7 +70,7 @@ public class PrivacyProxy {
 //            } else if (mLongName.equals(PrivacyConfigInApp.getSSID)) {
 //                result = "<unknown ssid>";
             } else if (mLongName.equals(PrivacyConfigInApp.getMacAddress)) {
-                result = "02:00:00:00:00:00";
+                result = "01:01:00:00:00:00";
             } else if (mLongName.equals(PrivacyConfigInApp.getHardwareAddress)) {
                 result = null;
             } else if (mLongName.equals(PrivacyConfigInApp.getSerial)) {
@@ -93,11 +99,6 @@ public class PrivacyProxy {
         }
         return result;
 
-    }
-
-    public static String getString(ContentResolver resolver, String name) {
-         Log.d("chlog","getString");
-        return "444";
     }
 
     public static void privacyLog(boolean isAllow, String longName) {

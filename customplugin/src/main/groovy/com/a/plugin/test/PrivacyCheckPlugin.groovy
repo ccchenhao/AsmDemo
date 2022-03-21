@@ -1,6 +1,5 @@
 package com.a.plugin.test
 
-
 import com.a.plugin.PrivacyCheckTransformRob
 import com.a.plugin.PrivacyExtension
 import com.a.plugin.privacycheck.PrivacyConfig
@@ -44,6 +43,9 @@ class PrivacyCheckPlugin implements Plugin<Project> {
                 PrivacyConfig.Statement_Reject_Method = project['privacyExtension'].statementRejectValue
                 println 'Statement_Reject_Value=' + PrivacyConfig.Statement_Reject_Method
             }
+            if (project['privacyExtension'].useAsm) {
+                PrivacyConfig.useAsm = project['privacyExtension'].useAsm
+            }
 //            if (project['privacyExtension'].logTagAllow != null) {
 //                PrivacyConfig.Log_tag_Allow = project['privacyExtension'].logTagAllow
 //                println 'Log_tag_Allow=' + PrivacyConfig.Log_tag_Allow
@@ -52,10 +54,7 @@ class PrivacyCheckPlugin implements Plugin<Project> {
 //                PrivacyConfig.Log_tag_Reject = project['privacyExtension'].logTagReject
 //                println 'Log_tag_Reject=' + PrivacyConfig.Log_tag_Reject
 //            }
-
-
         }
         project.android.registerTransform(new PrivacyCheckTransformRob(project))
     }
-
 }

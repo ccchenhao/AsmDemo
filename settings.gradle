@@ -1,4 +1,3 @@
-rootProject.name = "MyHotfix"
+rootProject.name = "AsmDemo"
 include ':app'
-include ':baselib'
 include ':customplugin'

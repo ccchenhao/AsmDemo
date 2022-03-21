@@ -15,12 +15,18 @@ public class PrivacyConfig {
     //    public static String Log_tag_Allow ="alvinAllow222";
     //    public static String Log_tag_Reject = "alvinReject222";
     public static boolean isAllow = false;
-    public static String Statement_Reject_Method = "com.example.testgradle.privacy.PrivacyProxy.privacyRejectMethod";
-    public static String Statement_Reject_Field = "com.example.testgradle.privacy.PrivacyProxy.privacyRejectField";
-    public static String Statement_log = "com.example.testgradle.privacy.PrivacyProxy.privacyLog";
-
-    public static String IgnoreClass_MainApp = "com.example.testgradle.privacy.BaseApplication";
-    public static String IgnoreClass_PrivacyProxy = "com.example.testgradle.privacy.PrivacyProxy";
+    public static String pageName="com.example.testgradle.";
+    public static String Statement_Reject_Class =pageName+"privacy.PrivacyProxy";
+    public static String Statement_Reject_SIMPLE_Method = "privacyRejectMethod";
+    public static String Statement_Reject_Method = pageName+"privacy.PrivacyProxy.privacyRejectMethod";
+    public static String Statement_Reject_SIMPLE_Field = "privacyRejectField";
+    public static String Statement_Reject_Field = pageName+"privacy.PrivacyProxy.privacyRejectField";
+    public static String Statement_log = pageName+"privacy.PrivacyProxy.privacyLog";
+    public static String Statement_Log_SIMPLE_Method= "privacyLog";
+    public static String DescClass=pageName.replace(".", "/")+"privacy/Desc";
+    public static String IgnoreClass_MainApp = pageName+"privacy.BaseApplication";
+    public static String IgnoreClass_PrivacyProxy = pageName+"privacy.PrivacyProxy";
+    public static String ProxyClass=PrivacyConfig.IgnoreClass_PrivacyProxy.replace(".", "/");
 
     public static Set<String> ignoreClasses = new HashSet<>();
     public static Set<String> methodSet = new HashSet<>();
