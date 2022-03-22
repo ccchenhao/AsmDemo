@@ -28,31 +28,6 @@ android {
     }
     println "rootDir"+rootDir.getAbsolutePath()
 }
-//定义一个 task 名字为 installApk
-task("installApk") {
-    doLast {
-        //具体需要apk路径
-        def path = rootDir.getAbsolutePath() + "app/build/outputs/apk/debug/app-debug.apk"
-
-        //adb instal 命令
-        def command = "adb install -r ${path}"
-
-        try {
-            //调用 exec 方法执行这个命令
-            exec {
-                ExecSpec execSpec ->
-                    //配置闭包的内容
-                    executable 'bash'
-                    args '-c', command
-            }
-            //执行完之后，打印一句话
-            println "installApk install success"
-        } catch (Exception e) {
-
-        }
-
-    }
-}
 //    privacyExtension {
 //        statementAllowBool = 'com.example.testgradle.privacy.PrivacyProxy.isAllowVisit()'
 //        statementRejectValue = 'com.example.testgradle.privacy.PrivacyProxy.privacyRejectMethod'

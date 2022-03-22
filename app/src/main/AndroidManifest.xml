@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
-        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,19 +23,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-<!--            <tools:validation testUrl="http://www.nicomama.com" />-->
-<!--            <intent-filter android:autoVerify="true">-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
-
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
-
-<!--                <data-->
-<!--                    android:scheme="http"-->
-<!--                    android:host="www.nicomama.com" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name=".TestActivity">
 
         </activity>
     </application>
