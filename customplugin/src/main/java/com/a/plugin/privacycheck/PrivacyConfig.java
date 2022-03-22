@@ -14,6 +14,7 @@ public class PrivacyConfig {
     //    public static String Statement_Allow_bool = "com.ngmm365.privacychecker.PrivacyProxy.isAllowVisit()";
     //    public static String Log_tag_Allow ="alvinAllow222";
     //    public static String Log_tag_Reject = "alvinReject222";
+    public static boolean useAsm=true;
     public static boolean isAllow = false;
     public static String pageName="com.example.testgradle.";
     public static String Statement_Reject_Class =pageName+"privacy.PrivacyProxy";

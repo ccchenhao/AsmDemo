@@ -43,9 +43,8 @@ class PrivacyCheckPlugin implements Plugin<Project> {
                 PrivacyConfig.Statement_Reject_Method = project['privacyExtension'].statementRejectValue
                 println 'Statement_Reject_Value=' + PrivacyConfig.Statement_Reject_Method
             }
-            if (project['privacyExtension'].useAsm) {
-                PrivacyConfig.useAsm = project['privacyExtension'].useAsm
-            }
+            PrivacyConfig.useAsm = project['privacyExtension'].useAsm
+            println "useAsm="+PrivacyConfig.useAsm
 //            if (project['privacyExtension'].logTagAllow != null) {
 //                PrivacyConfig.Log_tag_Allow = project['privacyExtension'].logTagAllow
 //                println 'Log_tag_Allow=' + PrivacyConfig.Log_tag_Allow

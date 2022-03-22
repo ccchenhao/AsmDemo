@@ -169,7 +169,7 @@ public class PrivacyMethodVisitor extends LocalVariablesSorter {
 
     private void systemOutPrintln(String mLongName, int lineNumber, String currentMethod, String currentClass) {
         String sb = "\n========" +
-                "\ncall: " + mLongName +
+                "\nasm call: " + mLongName +
                 "\n  at: " + currentMethod + "(" + currentClass + ".java:" + lineNumber + ")";
         System.out.println(sb);
     }

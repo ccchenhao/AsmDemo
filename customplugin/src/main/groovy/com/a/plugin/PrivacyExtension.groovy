@@ -8,5 +8,5 @@ class PrivacyExtension {
     String logTagReject = null
     String statementRejectValue = null
     Set<String> ignoreClass = null
-    boolean useAsm = false
+    boolean useAsm = true
 }

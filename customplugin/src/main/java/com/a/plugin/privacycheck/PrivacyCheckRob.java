@@ -1,7 +1,14 @@
 package com.a.plugin.privacycheck;
 
+
+import com.a.plugin.privacycheck.asm.PrivacyClassVisitor;
+
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
@@ -15,9 +22,18 @@ import javassist.expr.FieldAccess;
 import javassist.expr.MethodCall;
 
 public class PrivacyCheckRob {
-
     public static void insertCode(List<CtClass> ctClasses, File jarFile) throws Exception {
         long startTime = System.currentTimeMillis();
+        if (PrivacyConfig.useAsm) {
+            insertCodeByAsm(ctClasses, jarFile);
+        } else {
+            insertCodeByJavassist(ctClasses, jarFile);
+        }
+        float cost = (System.currentTimeMillis() - startTime) / 1000.0f;
+        System.out.println((PrivacyConfig.useAsm ? "asm" : "javassist") + " insertCode cost " + cost + " second");
+    }
+
+    public static void insertCodeByJavassist(List<CtClass> ctClasses, File jarFile) throws Exception {
         ZipOutputStream outStream = new JarOutputStream(new FileOutputStream(jarFile));
         for (CtClass ctClass : ctClasses) {
             if (ctClass.isFrozen()) ctClass.defrost();
@@ -28,7 +44,6 @@ public class PrivacyCheckRob {
                         @Override
                         public void edit(MethodCall m) throws CannotCompileException {
                             String mLongName = m.getClassName() + "." + m.getMethodName();
-
                             if (PrivacyConfig.methodHookValueSet.contains(mLongName) && !skipPackage(ctMethod.getLongName())) {
                                 systemOutPrintln(mLongName, m.getLineNumber(), ctMethod);
 //                                InjectAddLog.execute(m);
@@ -47,11 +62,10 @@ public class PrivacyCheckRob {
                         }
 
                         private void systemOutPrintln(String mLongName, int lineNumber, CtMethod ctMethod) {
-                            StringBuilder sb = new StringBuilder();
-                            sb.append("\n========");
-                            sb.append("\ncall: " + mLongName);
-                            sb.append("\n  at: " + ctMethod.getLongName() + "(" + ctMethod.getDeclaringClass().getSimpleName() + ".java:" + lineNumber + ")");
-                            System.out.println(sb.toString());
+                            String sb = "\n========" +
+                                    "\ncall: " + mLongName +
+                                    "\n  at: " + ctMethod.getLongName() + "(" + ctMethod.getDeclaringClass().getSimpleName() + ".java:" + lineNumber + ")";
+                            System.out.println(sb);
                         }
                     });
                 }
@@ -60,9 +74,6 @@ public class PrivacyCheckRob {
             zipFile(ctClass.toBytecode(), outStream, ctClass.getName().replaceAll("\\.", "/") + ".class");
         }
         outStream.close();
-        float cost = (System.currentTimeMillis() - startTime) / 1000.0f;
-        System.out.println("insertCode cost " + cost + " second");
-
     }
 
     public static boolean skipPackage(String ctMethodLongName) {
@@ -84,4 +95,27 @@ public class PrivacyCheckRob {
             e.printStackTrace();
         }
     }
+
+    private static void insertCodeByAsm(List<CtClass> box, File jarFile) throws IOException, CannotCompileException {
+        ZipOutputStream outStream = new JarOutputStream(new FileOutputStream(jarFile));
+        for (CtClass ctClass : box) {
+            if (!PrivacyCheckRob.skipPackage(ctClass.getName()) && !PrivacyConfig.ignoreClasses.contains(ctClass.getName()) && !(ctClass.isInterface() || ctClass.getDeclaredMethods().length < 1)) {
+                zipFile(asmTransformCode(ctClass.toBytecode()), outStream, ctClass.getName().replaceAll("\\.", "/") + ".class");
+            } else {
+                zipFile(ctClass.toBytecode(), outStream, ctClass.getName().replaceAll("\\.", "/") + ".class");
+
+            }
+//            ctClass.defrost();
+        }
+        outStream.close();
+    }
+
+    private static byte[] asmTransformCode(byte[] b1) throws IOException {
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        ClassReader cr = new ClassReader(b1);
+        PrivacyClassVisitor insertMethodBodyAdapter = new PrivacyClassVisitor(cw);
+        cr.accept(insertMethodBodyAdapter, ClassReader.EXPAND_FRAMES);
+        return cw.toByteArray();
+    }
+
 }
